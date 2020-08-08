@@ -49,7 +49,7 @@ self.addEventListener("fetch", function (evt) {
             caches.open(DATA_CACHE_NAME).then(cache => {
                 return fetch(evt.request)
                     .then(response => {
-                        // If the response was good, clone it and store it in the cache.
+                        // if response was successful, clone it
                         if (response.status === 200) {
                             cache.put(evt.request.url, response.clone());
                         }
@@ -57,7 +57,7 @@ self.addEventListener("fetch", function (evt) {
                         return response;
                     })
                     .catch(err => {
-                        // Network request failed, try to get it from the cache.
+                        // if network request fails, try to retrieve it from the cache 
                         return cache.match(evt.request);
                     });
             }).catch(err => console.log(err))
